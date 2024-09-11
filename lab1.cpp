@@ -34,9 +34,9 @@ int main () {
     char *str = NULL;
     printf("Введите количество симолов в массиве: \n");
     scan_positive(&len);
-    arr = malloc(sizeof(Array));
+    arr = new Array;
     arr->len = len;
-    arr->arr = malloc(len * sizeof(int));
+    arr->arr = new int[len];
     arr->name = readline("Введите название массива: \n");
     for (int i = 0; i < arr->len; i++) {
         scanf("%d", (arr->arr + i));

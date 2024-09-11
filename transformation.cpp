@@ -23,7 +23,7 @@ char *make_num(int num) {
         count++;
     }
 
-    char *number = malloc((count) * sizeof(char));
+    char *number = new char[count];
     for (int i = (count - 1); i >= 0; i--) {
         num2 = (num1 % 10) + '0';
         number[i] = num2;
@@ -34,8 +34,20 @@ char *make_num(int num) {
     return number;
 }
 
+int *my_realloc(int *arr, size_t old_size, size_t size){
+    int *buff = arr;
+    arr = new int[size];
+    for (int i = 0; i < old_size; i++) {
+        arr[i] = buff[i];
+    }
+    
+    delete []buff;
+
+    return arr;
+}
+
 char *transformation(Array *arr, char *name) {
-    char *s = malloc(arr->len);
+    char *s = new char[arr->len];
     s[0] = '\0';
     char *num = NULL;
     int len = 0;
@@ -45,20 +57,7 @@ char *transformation(Array *arr, char *name) {
     for (int i = 0; i < arr->len; i++) {
         s = strcat(s, name);
         s = strcat(s, ".");
-        //len = strlen(s);
         num1 = i;
-        /*while (num1 != 0) {
-            num1 /= 10;
-            count++;
-        }
-        s = realloc(s, len + count + 1);
-        num1 = i;
-        char *number = malloc(((count) + 1) * sizeof(char));
-        for (int i = (count - 1); i >= 0; i--) {
-            number[i] = (num1 % 10) + '0';
-            num1 /= 10;
-        }
-        number[count] = '\0';*/
         num = make_num(i + 1);
         s = strcat(s, num);
         s = strcat(s, "=");
@@ -74,9 +73,9 @@ char *transformation(Array *arr, char *name) {
 Array *transform_to_int(char *str, Array *arr) {
     int counter = 0;
     int len = 1;
-    arr = malloc(sizeof(Array));
+    arr = new Array;
     arr->len = len;
-    arr->arr = malloc(len * sizeof(int));
+    arr->arr = new int[len];
     char *s = strtok(str, "\n");
     while (s != NULL) {
         int len = strlen(s);
@@ -91,7 +90,7 @@ Array *transform_to_int(char *str, Array *arr) {
         int num1 = num - '0';
         arr->arr[counter] = num1;
         counter++;
-        arr->arr = realloc(arr->arr, counter);
+        arr->arr = my_realloc(arr->arr, len,counter);
         arr->len = counter;
 
         s = strtok(NULL, "\n");

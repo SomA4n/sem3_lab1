@@ -8,15 +8,7 @@ typedef struct Array{
     size_t len;
 }Array;
 
-typedef struct String_el{
-    char *key;
-    char info;
-}String_el;
-
-typedef struct String{
-    String_el *string;
-}String;
-
-
+char *transformation(Array *arr, char *name);
+Array *transform_to_int(char *str, Array *arr);
 
 #endif
